@@ -17,4 +17,7 @@ receivers:
             smarthost: smtp.viettel.com.vn:465
             text: alert example
             require_tls: false
+      webhook_configs:
+          - url: 'http://localhost:8000'
+
               
