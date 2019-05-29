@@ -9,15 +9,15 @@ receivers:
             username: 'Prometheus'
             channel: '#test'
             api_url: 'https://hooks.slack.com/services/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'
-      email_configs:
-          - to: ducnv41@viettel.com.vn 
-            from: ducnv41@viettel.com.vn 
-            auth_username: ducnv41
-            auth_password: Ducnguyen@1995
-            smarthost: smtp.viettel.com.vn:465
-            text: alert example
-            require_tls: false
-      webhook_configs:
-          - url: 'http://localhost:8000'
+      # email_configs:
+      #     - to: ducnv41@viettel.com.vn 
+      #       from: ducnv41@viettel.com.vn 
+      #       auth_username: ducnv41
+      #       auth_password: Ducnguyen@1995
+      #       smarthost: smtp.viettel.com.vn:465
+      #       text: alert example
+      #       require_tls: false
+      # webhook_configs:
+      #     - url: 'http://localhost:8000'
 
               

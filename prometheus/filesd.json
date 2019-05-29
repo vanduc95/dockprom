@@ -1,6 +1,6 @@
 [
   {
-    "targets": ["localhost:9100", "10.240.202.160:9100"],
+    "targets": ["localhost:9100"],
     "labels": {
       "os": "ubuntu-18.04"
     }
