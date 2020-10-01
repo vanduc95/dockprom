@@ -1,8 +1,9 @@
 import SimpleHTTPServer
 import SocketServer
 import json
+import sys
 
-PORT = 8000
+PORT = int(sys.argv[1])
 
 class Handler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_POST(self):
@@ -15,7 +16,7 @@ class Handler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         json_string = self.rfile.read(content_length)
         data = json.loads(json_string)
-        print data
+        print json.dumps(data, indent=4)
 
 httpd = SocketServer.TCPServer(("", PORT), Handler)
 

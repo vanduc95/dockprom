@@ -1,0 +1,19 @@
+[
+    {
+        "annotations": {
+            "description": "Test alert",
+            "summary": "VSmart host is under high CPU load"
+        },
+        "startsAt": "2020-07-08T23:14:23.163+07:00",
+        "endsAt": "2020-07-08T23:49:23.163+07:00",
+        "generatorURL": "http://10.240.201.100:9091/graph?g0.expr=100%2B-%2B%28avg%2Bby%28instance%252C%2Bjob%29%2B%28irate%28node_cpu_seconds_total%7Bjob%253D~%22openstack-instance-vsmart_microservice.%2A%22%252Cmode%253D%22idle%22%7D%5B5m%5D%29%29%2B%2A%2B100%29%2B%3E%2B50%26g0.tab%3D1",
+        "labels": {
+            "alertname": "vsmart_high_cpu_usage",
+            "group": "v_clouds",
+            "instance": "10.240.203.216:9100",
+            "job": "openstack-instance-vsmart_microservice-node",
+            "monitor": "openstack-hlct5",
+            "severity": "warning"
+        }
+    }
+]
