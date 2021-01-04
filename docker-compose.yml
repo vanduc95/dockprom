@@ -60,7 +60,7 @@ services:
       - "--storage.path=/alertmanager"
       - "--web.listen-address=:9093"
       - "--cluster.listen-address=:9095"
-      - "--cluster.peer=:9096"
+      - "--cluster.peer=localhost:9096"
       - "--log.level=info"
     restart: unless-stopped
     network_mode: host
@@ -79,7 +79,7 @@ services:
       - "--storage.path=/alertmanager"
       - "--web.listen-address=:9094"
       - "--cluster.listen-address=:9096"
-      - "--cluster.peer=:9095"
+      - "--cluster.peer=localhost:9095"
       - "--log.level=info"
     restart: unless-stopped
     network_mode: host
