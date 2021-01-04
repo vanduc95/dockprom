@@ -1,27 +1,26 @@
-version: '3.0'
+version: "3.0"
 
 volumes:
-    prometheus1_data: {}
-    prometheus2_data: {}
-    grafana_data: {}
+  prometheus1_data: {}
+  prometheus2_data: {}
+  grafana_data: {}
 
 services:
-
   prometheus1:
-    image: prom/prometheus:v2.21.0
+    image: prom/prometheus:v2.23.0
     container_name: prometheus1
     volumes:
       - ./prometheus1/:/etc/prometheus/
       - prometheus1_data:/prometheus
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/etc/prometheus/console_libraries'
-      - '--web.console.templates=/etc/prometheus/consoles'
-      - '--storage.tsdb.retention.time=200h'
-      - '--storage.tsdb.max-block-duration=5d'
-      - '--web.enable-lifecycle'
-      - '--web.listen-address=:9090'
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--storage.tsdb.retention.time=200h"
+      - "--storage.tsdb.max-block-duration=5d"
+      - "--web.enable-lifecycle"
+      - "--web.listen-address=:9090"
     restart: unless-stopped
     network_mode: host
     environment:
@@ -30,20 +29,20 @@ services:
       org.label-schema.group: "monitoring"
 
   prometheus2:
-    image: prom/prometheus:v2.21.0
+    image: prom/prometheus:v2.23.0
     container_name: prometheus2
     volumes:
       - ./prometheus2/:/etc/prometheus/
       - prometheus2_data:/prometheus
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/etc/prometheus/console_libraries'
-      - '--web.console.templates=/etc/prometheus/consoles'
-      - '--storage.tsdb.retention.time=200h'
-      - '--storage.tsdb.max-block-duration=5d'
-      - '--web.enable-lifecycle'
-      - '--web.listen-address=:9091'
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--storage.tsdb.retention.time=200h"
+      - "--storage.tsdb.max-block-duration=5d"
+      - "--web.enable-lifecycle"
+      - "--web.listen-address=:9091"
     restart: unless-stopped
     network_mode: host
     environment:
@@ -57,12 +56,12 @@ services:
     volumes:
       - ./alertmanager/:/etc/alertmanager/
     command:
-      - '--config.file=/etc/alertmanager/config.yml'
-      - '--storage.path=/alertmanager'
-      - '--web.listen-address=:9093'
-      - '--cluster.listen-address=:9095'
-      - '--cluster.peer=localhost:9096'
-      - '--log.level=info'
+      - "--config.file=/etc/alertmanager/config.yml"
+      - "--storage.path=/alertmanager"
+      - "--web.listen-address=:9093"
+      - "--cluster.listen-address=:9095"
+      - "--cluster.peer=:9096"
+      - "--log.level=info"
     restart: unless-stopped
     network_mode: host
     environment:
@@ -76,12 +75,12 @@ services:
     volumes:
       - ./alertmanager/:/etc/alertmanager/
     command:
-      - '--config.file=/etc/alertmanager/config.yml'
-      - '--storage.path=/alertmanager'
-      - '--web.listen-address=:9094'
-      - '--cluster.listen-address=:9096'
-      - '--cluster.peer=localhost:9095'
-      - '--log.level=info'
+      - "--config.file=/etc/alertmanager/config.yml"
+      - "--storage.path=/alertmanager"
+      - "--web.listen-address=:9094"
+      - "--cluster.listen-address=:9096"
+      - "--cluster.peer=:9095"
+      - "--log.level=info"
     restart: unless-stopped
     network_mode: host
     environment:
@@ -97,10 +96,10 @@ services:
       - /sys:/host/sys:ro
       - /:/rootfs:ro
     command:
-      - '--path.procfs=/host/proc'
-      - '--path.rootfs=/rootfs'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+      - "--path.procfs=/host/proc"
+      - "--path.rootfs=/rootfs"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)"
     restart: unless-stopped
     network_mode: host
     environment:
@@ -135,8 +134,6 @@ services:
       - GF_USERS_ALLOW_SIGN_UP=false
     restart: unless-stopped
     network_mode: host
-    environment:
-      TZ: "Asia/Ho_Chi_Minh"
     labels:
       org.label-schema.group: "monitoring"
 
