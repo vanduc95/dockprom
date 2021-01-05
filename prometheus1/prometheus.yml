@@ -1,11 +1,11 @@
 global:
-  scrape_interval: 1m
+  scrape_interval: 15s
   evaluation_interval: 15s
 
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
   external_labels:
-      monitor: 'prom1'
+      monitor: 'prom'
 
 alerting:
   alertmanagers:
@@ -13,6 +13,7 @@ alerting:
     static_configs:
     - targets: 
       - 'localhost:9093'
+      - 'localhost:9094'
 
 # Load and evaluate rules in this file every 'evaluation_interval' seconds.
 rule_files:
@@ -23,9 +24,9 @@ rule_files:
 
 # A scrape configuration containing exactly one endpoint to scrape.
 scrape_configs:
-  - job_name: 'node-exporter'
-    file_sd_configs:
-      - files:
-        - filesd.json
-
-
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: [
+      'localhost:9090',
+      'localhost:9091'
+    ]
