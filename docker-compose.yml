@@ -6,16 +6,16 @@ volumes:
   grafana_data: {}
 
 services:
-  haproxy:
-    image: haproxy:2.3
-    container_name: haproxy
-    volumes:
-      - ./haproxy/:/usr/local/etc/haproxy/:ro
-    restart: unless-stopped
-    network_mode: host
+  # haproxy:
+  #   image: haproxy:2.3
+  #   container_name: haproxy
+  #   volumes:
+  #     - ./haproxy/:/usr/local/etc/haproxy/:ro
+  #   restart: unless-stopped
+  #   network_mode: host
 
   prometheus1:
-    image: prom/prometheus:v2.23.0
+    image: prom/prometheus:v2.43.0
     container_name: prometheus1
     volumes:
       - ./prometheus1/:/etc/prometheus/
@@ -37,7 +37,7 @@ services:
       org.label-schema.group: "monitoring"
 
   prometheus2:
-    image: prom/prometheus:v2.23.0
+    image: prom/prometheus:v2.43.0
     container_name: prometheus2
     volumes:
       - ./prometheus2/:/etc/prometheus/
@@ -59,7 +59,7 @@ services:
       org.label-schema.group: "monitoring"
 
   alertmanager1:
-    image: prom/alertmanager:v0.20.0
+    image: prom/alertmanager:v0.25.0
     container_name: alertmanager1
     volumes:
       - ./alertmanager/:/etc/alertmanager/
@@ -78,7 +78,7 @@ services:
       org.label-schema.group: "monitoring"
 
   alertmanager2:
-    image: prom/alertmanager:v0.20.0
+    image: prom/alertmanager:v0.25.0
     container_name: alertmanager2
     volumes:
       - ./alertmanager/:/etc/alertmanager/
@@ -97,7 +97,7 @@ services:
       org.label-schema.group: "monitoring"
 
   nodeexporter:
-    image: prom/node-exporter:v1.0.1
+    image: prom/node-exporter:v1.5.0
     container_name: nodeexporter
     volumes:
       - /proc:/host/proc:ro
@@ -116,13 +116,17 @@ services:
       org.label-schema.group: "monitoring"
 
   cadvisor:
-    image: google/cadvisor:v0.33.0
+    image: gcr.io/cadvisor/cadvisor:v0.47.1
     container_name: cadvisor
+    privileged: true
+    devices:
+      - /dev/kmsg:/dev/kmsg
     volumes:
       - /:/rootfs:ro
-      - /var/run:/var/run:rw
+      - /var/run:/var/run:ro
       - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      #- /cgroup:/cgroup:ro #doesn't work on MacOS only for Linux
     restart: unless-stopped
     network_mode: host
     environment:
@@ -131,11 +135,12 @@ services:
       org.label-schema.group: "monitoring"
 
   grafana:
-    image: grafana/grafana:7.2.0
+    image: grafana/grafana:9.5.1
     container_name: grafana
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
     environment:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
@@ -145,12 +150,12 @@ services:
     labels:
       org.label-schema.group: "monitoring"
 
-  pushgateway:
-    image: prom/pushgateway:v1.2.0
-    container_name: pushgateway
-    restart: unless-stopped
-    network_mode: host
-    environment:
-      TZ: "Asia/Ho_Chi_Minh"
-    labels:
-      org.label-schema.group: "monitoring"
+  # pushgateway:
+  #   image: prom/pushgateway:v1.2.0
+  #   container_name: pushgateway
+  #   restart: unless-stopped
+  #   network_mode: host
+  #   environment:
+  #     TZ: "Asia/Ho_Chi_Minh"
+  #   labels:
+  #     org.label-schema.group: "monitoring"
